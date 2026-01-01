@@ -1,4 +1,4 @@
---!strict
+-!strict
 -- GlowBlurUI PRO v3.x (Roblox PlayerScript Full Version)
 -- Работает как полнофункциональный UI в PlayerGui
 -- Используй как LocalScript в StarterPlayerScripts
@@ -1445,15 +1445,36 @@ local UI = {
     IsOpen = function() return opened end,
 }
 
--- ========== CLEANUP ==========
-game.Players.LocalPlayer.CharacterRemoving:Connect(function()
+-- ========== CLEANUP (LocalScript Compatible) ==========
+-- Cleanup при выходе из игры (для обычного выхода)
+local function cleanup()
     CancelAllTweens()
     DisconnectAll()
     if snowConnection then Disconnect(snowConnection) end
     pcall(function() RunService:UnbindFromRenderStep("GlowBlurUI_MouseUnblock") end)
-    if gui then gui:Destroy() end
+    if gui then pcall(function() gui:Destroy() end) end
     destroyed = true
+end
+
+-- Убрали game:BindToClose - не работает в LocalScript
+-- Вместо этого используем события PlayerGui
+
+-- Cleanup при разрушении PlayerGui (самый надёжный способ)
+local playerGuiConn = playerGui.AncestryChanged:Connect(function()
+    if not playerGui.Parent then
+        cleanup()
+    end
 end)
+table.insert(allConnections, playerGuiConn)
+
+-- Альтернативный cleanup при respawn
+local charRemoving = game.Players.LocalPlayer.CharacterRemoving:Connect(function()
+    -- Не уничтожаем UI при респауне, только скрываем
+    if opened then
+        setOpen(false)
+    end
+end)
+table.insert(allConnections, charRemoving)
 
 -- Auto-open on startup
 task.delay(0.5, function()
@@ -1461,5 +1482,3 @@ task.delay(0.5, function()
 end)
 
 return UI
-
-
