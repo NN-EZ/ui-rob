@@ -979,7 +979,7 @@ modalBlocker = New("TextButton", {
 	Parent = gui,
 }) :: TextButton
 modalBlocker.ZIndex = 1
-window.ZIndex = 200
+window.ZIndex = 200000000
 
 --====================================================
 -- TAB FUNCTIONS
@@ -2702,6 +2702,7 @@ task.defer(function()
 end)
 
 return UI
+
 
 
 
