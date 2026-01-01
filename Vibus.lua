@@ -763,6 +763,52 @@ New("TextLabel", {
     Parent = titleHolder,
 })
 
+local animBusy = false
+local defaultText = "| Discord"
+local copiedText  = "| Copied!"
+
+local hoverTweenIn
+local hoverTweenOut
+
+local function tween(obj, info, props)
+    local tw = TweenService:Create(obj, info, props)
+    tw:Play()
+    return tw
+end
+
+local fadeInfo = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+local function smoothSwapText(btn, newText, newColor, showTime)
+    if animBusy then return end
+    animBusy = true
+    tween(btn, fadeInfo, {
+        TextTransparency = 1,
+        TextStrokeTransparency = 1,
+    }).Completed:Wait()
+    btn.Text = newText
+    if newColor then
+        btn.TextColor3 = newColor
+        btn.TextStrokeTransparency = 0.7
+    end
+    tween(btn, fadeInfo, {
+        TextTransparency = 0,
+        TextStrokeTransparency = btn.TextStrokeTransparency,
+    }).Completed:Wait()
+    task.wait(showTime or 1.2)
+    tween(btn, fadeInfo, {
+        TextTransparency = 1,
+        TextStrokeTransparency = 1,
+    }).Completed:Wait()
+    btn.Text = defaultText
+    btn.TextColor3 = Config.Accent
+    btn.TextStrokeTransparency = 1
+    tween(btn, fadeInfo, {
+        TextTransparency = 0,
+        TextStrokeTransparency = 1,
+    }):Play()
+    animBusy = false
+end
+
 local discordLink = New("TextButton", {
     Name = "DiscordLink",
     BackgroundTransparency = 1,
@@ -777,24 +823,34 @@ local discordLink = New("TextButton", {
     Parent = titleHolder,
 })
 
--- Логика кнопки Discord
 discordLink.MouseButton1Click:Connect(function()
     setclipboard("https://discord.gg/vwBVrhnN4c")
     if typeof(PushLog) == "function" then
         PushLog("INFO", "Discord ссылка скопирована!")
     end
-    discordLink.TextColor3 = Color3.fromRGB(80, 255, 120)
-    discordLink.TextStrokeTransparency = 0.7
+    smoothSwapText(discordLink, copiedText, Color3.fromRGB(80, 255, 120), 1.2)
 end)
 
 discordLink.MouseEnter:Connect(function()
-    discordLink.TextColor3 = Config.AccentGlow
-    discordLink.TextStrokeTransparency = 0.7
+    if animBusy then return end
+    if hoverTweenOut then
+        hoverTweenOut:Cancel()
+    end
+    hoverTweenIn = tween(discordLink, fadeInfo, {
+        TextColor3 = Config.AccentGlow,
+        TextStrokeTransparency = 0.7,
+    })
 end)
 
 discordLink.MouseLeave:Connect(function()
-    discordLink.TextColor3 = Config.Accent
-    discordLink.TextStrokeTransparency = 1
+    if animBusy then return end
+    if hoverTweenIn then
+        hoverTweenIn:Cancel()
+    end
+    hoverTweenOut = tween(discordLink, fadeInfo, {
+        TextColor3 = Config.Accent,
+        TextStrokeTransparency = 1,
+    })
 end)
 
 settingsPopover = New("Frame", {
@@ -2643,4 +2699,5 @@ task.defer(function()
 end)
 
 return UI
+
 
