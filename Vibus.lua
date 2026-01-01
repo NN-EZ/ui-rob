@@ -29,7 +29,7 @@ local Icons = {
 local FOLDER = "Vibus"
 local BG_FILE   = FOLDER .. "/bg.png"
 local CFG_FILE   = FOLDER .. "/Vibus_Settings.json"
-local BG_URL    = "https://media.discordapp.net/attachments/1456296637277274373/1456300436909850654/cd118457-2b80-4295-91ff-8828cabb9851.png?ex=6957dcf8&is=69568b78&hm=4623e5fec4c196b98cd5c6d793afe76514c908094378352f958945947af8a78c&=&format=webp&quality=lossless&width=1382&height=922"
+local BG_URL    = "https://media.discordapp.net/attachments/1456348568079302758/1456348662018998363/fee38623-a264-45f3-bd07-a261ad992e4b.png?ex=695809e2&is=6956b862&hm=f96f660a4d0a5b336e24df53d4e2376d43f424a5771b477d65a07afd1784b2b5&=&format=webp&quality=lossless&width=1379&height=919" --"https://media.discordapp.net/attachments/1456296637277274373/1456300436909850654/cd118457-2b80-4295-91ff-8828cabb9851.png?ex=6957dcf8&is=69568b78&hm=4623e5fec4c196b98cd5c6d793afe76514c908094378352f958945947af8a78c&=&format=webp&quality=lossless&width=1382&height=922"
 local hasFS = makefolder and isfolder and writefile and readfile and getcustomasset
 
 if hasFS then
@@ -2643,3 +2643,4 @@ task.defer(function()
 end)
 
 return UI
+
