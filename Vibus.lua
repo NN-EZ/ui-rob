@@ -1446,7 +1446,7 @@ local UI = {
 }
 
 -- ========== CLEANUP ==========
-game:BindToClose(function()
+game.Players.LocalPlayer.CharacterRemoving:Connect(function()
     CancelAllTweens()
     DisconnectAll()
     if snowConnection then Disconnect(snowConnection) end
@@ -1461,3 +1461,4 @@ task.delay(0.5, function()
 end)
 
 return UI
+
