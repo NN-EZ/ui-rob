@@ -1,4 +1,4 @@
--!strict
+
 -- GlowBlurUI PRO v3.x ANTI-DETECTION VERSION
 -- 100% ClientSide | Работает как PlayerScript/LocalScript
 -- Никакие сетевые вызовы не используются
