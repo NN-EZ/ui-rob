@@ -699,7 +699,7 @@ if hasFS then
     end
 end
 
-window.ZIndex = math.huge
+window.ZIndex = 2
 --topbar.ZIndex = 3
 --body.ZIndex = 3
 
@@ -2702,6 +2702,7 @@ task.defer(function()
 end)
 
 return UI
+
 
 
 
