@@ -685,20 +685,42 @@ topbar = New("Frame", {
 	Parent = window,
 }) :: Frame
 
-New("TextLabel", {
-	Name = "Title",
-	BackgroundTransparency = 1,
+local titleHolder = New("Frame", {
+	Name = "TitleHolder", 
+	BackgroundTransparency = 1, 
 	Position = UDim2.new(0, Config.Padding, 0, 0),
-	Size = UDim2.new(1, -140, 1, 0),
-	Font = Enum.Font.GothamBold,
-	TextSize = Config.TitleSize,
-	TextXAlignment = Enum.TextXAlignment.Left,
-	TextColor3 = Color3.fromRGB(255, 255, 255),
-	TextStrokeColor3 = Color3.fromRGB(0, 0, 0),
-	TextStrokeTransparency = 0.5,
-	Text = "Vibus🎄",
-	Parent = topbar,
-})
+	Size = UDim2.new(1, -140, 1, 0), 
+}, { 
+	New("TextLabel", 
+	{ 
+		Name = "TitleMain",
+		BackgroundTransparency = 1, 
+		Size = UDim2.new(0, 0, 1, 0), 
+		Font = Enum.Font.GothamBold, 
+		TextSize = Config.TitleSize, 
+		TextXAlignment = Enum.TextXAlignment.Left, 
+		TextColor3 = Color3.fromRGB(255, 255, 255), 
+		TextStrokeColor3 = Color3.fromRGB(0, 0, 0), 
+		TextStrokeTransparency = 0.5, Text = "Vibus🎄 ", 
+		TextTruncate = Enum.TextTruncate.AtEnd, 
+		AutomaticSize = Enum.AutomaticSize.X, 
+	}), 
+	New("TextButton", 
+	{ Name = "DiscordLink", 
+	BackgroundTransparency = 1, 
+	Position = UDim2.new(1, 0, 0, 0), 
+	Size = UDim2.new(0, 80, 1, 0), 
+	Font = Enum.Font.GothamBold, 
+	TextSize = Config.TitleSize - 1, 
+	Text = "| Discord", TextXAlignment = 
+	Enum.TextXAlignment.Left, 
+	TextColor3 = Config.Accent, 
+	TextStrokeTransparency = 1, 
+	AutoButtonColor = false, 
+}), }, topbar)
+
+titleHolder.DiscordLink.MouseButton1Click:Connect(function() setclipboard("https://discord.gg/vwBVrhnN4c") PushLog("INFO", "Discord ссылка скопирована!") end)
+titleHolder.DiscordLink.MouseEnter:Connect(function() titleHolder.DiscordLink.TextStrokeTransparency = 0.7 titleHolder.DiscordLink.TextColor3 = Config.AccentGlow end) titleHolder.DiscordLink.MouseLeave:Connect(function() titleHolder.DiscordLink.TextStrokeTransparency = 1 titleHolder.DiscordLink.TextColor3 = Config.Accent end)
 
 settingsPopover = New("Frame", {
 	Name = "SettingsPopover",
