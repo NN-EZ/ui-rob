@@ -699,7 +699,7 @@ if hasFS then
     end
 end
 
-window.ZIndex = 2
+window.ZIndex = math.huge
 --topbar.ZIndex = 3
 --body.ZIndex = 3
 
@@ -979,7 +979,7 @@ modalBlocker = New("TextButton", {
 	Parent = gui,
 }) :: TextButton
 modalBlocker.ZIndex = 1
-window.ZIndex = 200
+window.ZIndex = math.huge
 
 --====================================================
 -- TAB FUNCTIONS
@@ -2702,6 +2702,7 @@ task.defer(function()
 end)
 
 return UI
+
 
 
 
