@@ -25,7 +25,24 @@ local Icons = {
 	Warning = "⚠️",
 	Arrow = "➡️",
 }
+--// BACKGROUND
+local FOLDER = "Vibus"
+local BG_FILE   = FOLDER .. "/bg.png"
+local CFG_FILE   = FOLDER .. "/Vibus_Settings.json"
+local BG_URL    = "https://media.discordapp.net/attachments/1456296637277274373/1456300436909850654/cd118457-2b80-4295-91ff-8828cabb9851.png?ex=6957dcf8&is=69568b78&hm=4623e5fec4c196b98cd5c6d793afe76514c908094378352f958945947af8a78c&=&format=webp&quality=lossless&width=1382&height=922"
+local hasFS = makefolder and isfolder and writefile and readfile and getcustomasset
 
+if hasFS then
+    pcall(function()
+        if not isfolder(FOLDER) then
+            makefolder(FOLDER)
+        end
+        if not isfile(BG_FILE) then
+            local bytes = game:HttpGet(BG_URL)
+            writefile(BG_FILE, bytes)
+        end
+    end)
+end
 --// CONFIG
 local Config = {
 	ToggleKey = Enum.KeyCode.Insert,
@@ -79,81 +96,87 @@ local Config = {
 -- CONFIG STORE (Persistence)
 --====================================================
 local function saveConfig()
-	local data = {
-		BlurEnabled = Config.BlurSize > 0,
-		BlurSize = Config.BlurSize,
-		OverlayEnabled = Config.OverlayAlpha > 0,
-		OverlayAlpha = Config.OverlayAlpha,
-		AnimEnabled = Config.Anim.Enabled,
-		SnowEnabled = Config.Snow.Enabled,
-		OpenTime = Config.OpenTime,
-		TabTimeIn = Config.TabTimeIn,
-		TabTimeOut = Config.TabTimeOut,
-		ToggleAnimSpeed = Config.Anim.ToggleSpeed,
-		SliderAnimSpeed = Config.Anim.SliderSpeed,
-		ToggleKey = Config.ToggleKey.Name,
-	}
+    local data = {
+        BlurEnabled = Config.BlurSize > 0,
+        BlurSize = Config.BlurSize,
+        OverlayEnabled = Config.OverlayAlpha > 0,
+        OverlayAlpha = Config.OverlayAlpha,
+        AnimEnabled = Config.Anim.Enabled,
+        SnowEnabled = Config.Snow.Enabled,
+        OpenTime = Config.OpenTime,
+        TabTimeIn = Config.TabTimeIn,
+        TabTimeOut = Config.TabTimeOut,
+        ToggleAnimSpeed = Config.Anim.ToggleSpeed,
+        SliderAnimSpeed = Config.Anim.SliderSpeed,
+        ToggleKey = Config.ToggleKey.Name,
+    }
 
-	local json = HttpService:JSONEncode(data)
+    local json = HttpService:JSONEncode(data)
 
-	if writefile then
-		pcall(function()
-			writefile("GlowBlurUI_Settings.json", json)
-		end)
-	end
+    if writefile and makefolder and isfolder then
+        pcall(function()
+            if not isfolder(FOLDER) then
+                makefolder(FOLDER)
+            end
+            writefile(CFG_FILE, json)
+        end)
+    end
 
-	pcall(function()
-		playerGui:SetAttribute("GlowBlurUI_Settings", json)
-	end)
+    pcall(function()
+        playerGui:SetAttribute("Vibus_Settings", json)
+    end)
 end
 
 local function loadConfig()
-	local json: any = nil
+    local json: any = nil
 
-	if readfile then
-		pcall(function()
-			json = readfile("GlowBlurUI_Settings.json")
-		end)
-	end
+    if readfile and isfolder and isfile then
+        pcall(function()
+            if isfolder(FOLDER) and isfile(CFG_FILE) then
+                json = readfile(CFG_FILE)
+            end
+        end)
+    end
 
-	if not json then
-		pcall(function()
-			json = playerGui:GetAttribute("GlowBlurUI_Settings")
-		end)
-	end
+    if not json then
+        pcall(function()
+            json = playerGui:GetAttribute("Vibus_Settings")
+        end)
+    end
 
-	if type(json) == "string" and #json > 0 then
-		local ok, data = pcall(function()
-			return HttpService:JSONDecode(json)
-		end)
+    if type(json) == "string" and #json > 0 then
+        local ok, data = pcall(function()
+            return HttpService:JSONDecode(json)
+        end)
 
-		if ok and type(data) == "table" then
-			Config.BlurSize = data.BlurSize or Config.BlurSize
-			Config.OverlayAlpha = data.OverlayAlpha or Config.OverlayAlpha
-			Config.OpenTime = data.OpenTime or Config.OpenTime
-			Config.TabTimeIn = data.TabTimeIn or Config.TabTimeIn
-			Config.TabTimeOut = data.TabTimeOut or Config.TabTimeOut
+        if ok and type(data) == "table" then
+            Config.BlurSize = data.BlurSize or Config.BlurSize
+            Config.OverlayAlpha = data.OverlayAlpha or Config.OverlayAlpha
+            Config.OpenTime = data.OpenTime or Config.OpenTime
+            Config.TabTimeIn = data.TabTimeIn or Config.TabTimeIn
+            Config.TabTimeOut = data.TabTimeOut or Config.TabTimeOut
 
-			if data.AnimEnabled ~= nil then
-				Config.Anim.Enabled = data.AnimEnabled
-			end
+            if data.AnimEnabled ~= nil then
+                Config.Anim.Enabled = data.AnimEnabled
+            end
 
-			if data.SnowEnabled ~= nil then
-				Config.Snow.Enabled = data.SnowEnabled
-			end
+            if data.SnowEnabled ~= nil then
+                Config.Snow.Enabled = data.SnowEnabled
+            end
 
-			Config.Anim.ToggleSpeed = data.ToggleAnimSpeed or Config.Anim.ToggleSpeed
-			Config.Anim.SliderSpeed = data.SliderAnimSpeed or Config.Anim.SliderSpeed
+            Config.Anim.ToggleSpeed = data.ToggleAnimSpeed or Config.Anim.ToggleSpeed
+            Config.Anim.SliderSpeed = data.SliderAnimSpeed or Config.Anim.SliderSpeed
 
-			if type(data.ToggleKey) == "string" then
-				local kc = Enum.KeyCode[data.ToggleKey]
-				if kc then
-					Config.ToggleKey = kc
-				end
-			end
-		end
-	end
+            if type(data.ToggleKey) == "string" then
+                local kc = Enum.KeyCode[data.ToggleKey]
+                if kc then
+                    Config.ToggleKey = kc
+                end
+            end
+        end
+    end
 end
+
 
 loadConfig()
 
@@ -648,6 +671,34 @@ window = New("Frame", {
 }, {
 	New("UICorner", { CornerRadius = UDim.new(0, 12) }),
 }) :: Frame
+
+local bgImage
+if hasFS then
+    local ok, asset = pcall(function()
+        return getcustomasset(BG_FILE)
+    end)
+
+    if ok and asset then
+        bgImage = New("ImageLabel", {
+            Name = "BackgroundImage",
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            Image = asset,
+            ScaleType = Enum.ScaleType.Stretch, 
+            Size = UDim2.new(1, 0, 1, 0),      
+            Position = UDim2.fromScale(0, 0),
+            ZIndex = 0,
+            ImageTransparency = 0.6,
+            Parent = window,
+        }, {
+            New("UICorner", { CornerRadius = UDim.new(0, 12) }) 
+        })
+    end
+end
+
+window.ZIndex = 2
+--topbar.ZIndex = 3
+--body.ZIndex = 3
 
 winStroke = New("UIStroke", {
 	Color = Config.StrokeColor,
