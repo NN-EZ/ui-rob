@@ -1,0 +1,100 @@
+local Players = game:GetService("Players")
+local CoreGui = game:GetService("CoreGui")
+local RunService = game:GetService("RunService")
+
+local LP = Players.LocalPlayer
+local RAINBOW_SPEED = 0.0003 -- speed
+local hue = 0
+
+local HAT_CFG = {
+    Enabled = true,
+    Radius = 0.8,
+    Height = 0.8,
+    YOffset = 1.05,
+    Transparency = 0.4,
+    Material = Enum.Material.Neon
+}
+
+local highlight = nil
+local currentHat = nil
+
+local function cleanup()
+    if highlight then highlight:Destroy(); highlight = nil end
+    if currentHat then currentHat:Destroy(); currentHat = nil end
+end
+
+local function createHighlight(char)
+    if highlight then highlight:Destroy() end
+    
+    highlight = Instance.new("Highlight")
+    highlight.Name = "PlayerOutline"
+    highlight.FillTransparency = 1
+    highlight.OutlineTransparency = 0 
+    highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+    highlight.Adornee = char
+    highlight.Parent = CoreGui
+end
+
+local function createHat(char)
+    if currentHat then currentHat:Destroy() end
+    if not HAT_CFG.Enabled then return end
+
+    local head = char:FindFirstChild("Head") or char:FindFirstChild("HumanoidRootPart")
+    if not head then return end
+
+    local hat = Instance.new("Part")
+    hat.Name = "ChinaHat_RGB"
+    hat.Anchored = false
+    hat.CanCollide = false
+    hat.Massless = true
+    hat.Material = HAT_CFG.Material
+    hat.Transparency = HAT_CFG.Transparency
+    hat.Size = Vector3.new(1, 1, 1)
+    hat.Parent = char
+
+    local mesh = Instance.new("SpecialMesh")
+    mesh.MeshType = Enum.MeshType.FileMesh
+    mesh.MeshId = "rbxassetid://1033714"
+    mesh.Scale = Vector3.new(HAT_CFG.Radius * 2, HAT_CFG.Height * 2, HAT_CFG.Radius * 2)
+    mesh.Parent = hat
+
+    local weld = Instance.new("Weld")
+    weld.Part0 = head
+    weld.Part1 = hat
+    weld.C0 = CFrame.new(0, HAT_CFG.YOffset, 0)
+    weld.Parent = hat
+
+    currentHat = hat
+end
+
+RunService.Heartbeat:Connect(function()
+    hue = (hue + RAINBOW_SPEED) % 1
+    local color = Color3.fromHSV(hue, 1, 1)
+    
+    if highlight then
+        highlight.OutlineColor = color
+    end
+    
+    if currentHat then
+        currentHat.Color = color
+    end
+end)
+
+local function onCharacterAdded(char)
+    char:WaitForChild("HumanoidRootPart")
+    task.wait(0.2)
+    --createHighlight(char)
+    createHat(char)
+end
+
+LP.CharacterAdded:Connect(onCharacterAdded)
+
+if LP.Character then
+    onCharacterAdded(LP.Character)
+end
+
+-- api
+getgenv().RemoveVisuals = function()
+    HAT_CFG.Enabled = false
+    cleanup()
+end
