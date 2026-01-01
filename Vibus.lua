@@ -1,4 +1,4 @@
--!strict
+--!strict
 -- GlowBlurUI PRO v3.x (Roblox PlayerScript Full Version)
 -- Работает как полнофункциональный UI в PlayerGui
 -- Используй как LocalScript в StarterPlayerScripts
@@ -1482,3 +1482,4 @@ task.delay(0.5, function()
 end)
 
 return UI
+
