@@ -325,7 +325,7 @@ local function PushLog(level: string, msg: string)
 		TextColor3 = color,
 		TextTransparency = 1,
 		Text = prefix .. msg,
-		ZIndex = 950,
+		ZIndex = Math.Huge,
 		Parent = logFrame,
 	}) :: TextLabel
 
@@ -2723,6 +2723,7 @@ task.defer(function()
 end)
 
 return UI
+
 
 
 
