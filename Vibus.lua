@@ -1977,13 +1977,16 @@ local function addMultiDropdown(
 		Parent = holder,
 	}) :: TextLabel
 
-	local listWrap = New("Frame", {
-		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 0, 0, 40),
-		Size = UDim2.new(1, 0, 0, 0),
-		ClipsDescendants = true,
-		Parent = holder,
-	}) :: Frame
+	local listWrap = New("ScrollingFrame", {
+	    BackgroundTransparency = 1,
+	    Position = UDim2.new(0, 0, 0, 40),
+	    Size = UDim2.new(1, 0, 0, 0),
+	    CanvasSize = UDim2.new(0, 0, 0, 0),  
+	    ScrollBarThickness = 4,               
+	    ScrollBarImageTransparency = 0.5,     
+	    ClipsDescendants = true,
+	    Parent = holder,
+	})
 	MarkNoWindowDrag(listWrap)
 
 	local pad = New("UIPadding", {
@@ -2075,6 +2078,8 @@ local function addMultiDropdown(
 		openedLocal = false
 		arrow.Text = "▼"
 
+		listWrap.CanvasPosition = Vector2.new(0, 0)
+		
 		local t = Config.Anim.DropdownSpeed
 		PlayTween(listWrap, TweenInfo.new(t, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, 0, 0, 0) })
 		PlayTween(holder, TweenInfo.new(t, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, 0, 0, 40) })
@@ -2715,6 +2720,7 @@ task.defer(function()
 end)
 
 return UI
+
 
 
 
