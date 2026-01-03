@@ -950,6 +950,16 @@ tabsFrame = New("Frame", {
 	}),
 }) :: Frame
 
+local divider = New("Frame", {
+    Name = "Divider",
+    BackgroundColor3 = Config.Accent,
+    BackgroundTransparency = 0.7,
+    BorderSizePixel = 0,
+    Position = UDim2.new(0, 160, 0, 0),
+    Size = UDim2.new(0, 1, 1, 0),
+    Parent = body,
+})
+
 content = New("Frame", {
 	Name = "Content",
 	BackgroundTransparency = 1,
@@ -2671,6 +2681,14 @@ do
 	table.insert(allConnections, globalConn :: any)
 end
 
+local function updateDividerVisibility()
+    local hasTabs = #tabsFrame:GetChildren() > 0
+    local hasContent = content:FindFirstChild("Page") ~= nil
+    
+    if divider then
+        divider.Visible = hasTabs and hasContent
+    end
+end
 --====================================================
 -- UI.RESTART
 --====================================================
@@ -2723,6 +2741,7 @@ task.defer(function()
 end)
 
 return UI
+
 
 
 
