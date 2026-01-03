@@ -953,10 +953,10 @@ tabsFrame = New("Frame", {
 local divider = New("Frame", {
     Name = "Divider",
     BackgroundColor3 = Config.Accent,
-    BackgroundTransparency = 0.7,
+    --BackgroundTransparency = 0.7,
     BorderSizePixel = 0,
     Position = UDim2.new(0, 160, 0, 0),
-    Size = UDim2.new(0, 1, 1, 0),
+    Size = UDim2.new(0, 2, 1, 1),
     Parent = body,
 })
 
@@ -2741,6 +2741,7 @@ task.defer(function()
 end)
 
 return UI
+
 
 
 
