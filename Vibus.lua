@@ -1810,26 +1810,29 @@ local function addDropdown(
 	end
 
 	local function openSelf()
-		if openedLocal then
-			return
-		end
-		openedLocal = true
-
-		if activeDropdownClose and activeDropdownClose ~= closeSelf then
-			activeDropdownClose()
-		end
-		activeDropdownClose = closeSelf
-
-		arrow.Text = "▲"
-
-		task.defer(function()
-			local wanted = ll.AbsoluteContentSize.Y + pad.PaddingTop.Offset + pad.PaddingBottom.Offset
-			wanted = math.clamp(wanted, 0, 180)
-
-			local t = Config.Anim.DropdownSpeed
-			PlayTween(listWrap, TweenInfo.new(t, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, 0, 0, wanted) })
-			PlayTween(holder, TweenInfo.new(t, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, 0, 0, 40 + wanted) })
-		end)
+	    if openedLocal then
+	        return
+	    end
+	    openedLocal = true
+	    
+	    if activeDropdownClose and activeDropdownClose ~= closeSelf then
+	        activeDropdownClose()
+	    end
+	    activeDropdownClose = closeSelf
+	    arrow.Text = "▲"
+	    
+	    task.defer(function()
+	        local contentHeight = ll.AbsoluteContentSize.Y + pad.PaddingTop.Offset + pad.PaddingBottom.Offset
+	        local maxHeight = 300  -- максимум высоты со скроллом
+	        local wanted = math.min(contentHeight, maxHeight)  -- теперь скролл работает
+	        
+	        -- Обновляем Canvas для скролла
+	        listWrap.CanvasSize = UDim2.new(0, 0, 0, ll.AbsoluteContentSize.Y)
+	        
+	        local t = Config.Anim.DropdownSpeed
+	        PlayTween(listWrap, TweenInfo.new(t, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, 0, 0, wanted) })
+	        PlayTween(holder, TweenInfo.new(t, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, 0, 0, 40 + wanted) })
+	    end)
 	end
 
 	local function toggleOpen()
@@ -2720,6 +2723,7 @@ task.defer(function()
 end)
 
 return UI
+
 
 
 
