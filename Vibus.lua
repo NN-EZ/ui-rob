@@ -1815,7 +1815,7 @@ local function addDropdown(
 
 		task.defer(function()
 			local wanted = ll.AbsoluteContentSize.Y + pad.PaddingTop.Offset + pad.PaddingBottom.Offset
-			wanted = math.clamp(wanted, 0, 180)
+			--wanted = math.clamp(wanted, 0, 500)
 
 			local t = Config.Anim.DropdownSpeed
 			PlayTween(listWrap, TweenInfo.new(t, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, 0, 0, wanted) })
@@ -2702,6 +2702,7 @@ task.defer(function()
 end)
 
 return UI
+
 
 
 
