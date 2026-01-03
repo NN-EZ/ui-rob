@@ -1308,6 +1308,7 @@ local function addToggle(page: ScrollingFrame, text: string, default: boolean, c
 
 	local holder = New("Frame", {
 		BackgroundColor3 = Color3.fromRGB(28, 28, 34),
+		BackgroundTransparency = 1,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 40),
 		Parent = parent,
@@ -2708,6 +2709,7 @@ task.defer(function()
 end)
 
 return UI
+
 
 
 
