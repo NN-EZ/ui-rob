@@ -1819,7 +1819,7 @@ local function addDropdown(
 
 		task.defer(function()
 			local wanted = ll.AbsoluteContentSize.Y + pad.PaddingTop.Offset + pad.PaddingBottom.Offset
-			--wanted = math.clamp(wanted, 0, 500)
+			wanted = math.clamp(wanted, 0, 180)
 
 			local t = Config.Anim.DropdownSpeed
 			PlayTween(listWrap, TweenInfo.new(t, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, 0, 0, wanted) })
@@ -2079,32 +2079,30 @@ local function addMultiDropdown(
 	end
 
 	local function openSelf()
-	    if openedLocal then return end
+	    if openedLocal then
+	        return
+	    end
 	    openedLocal = true
+	
 	    if activeDropdownClose and activeDropdownClose ~= closeSelf then
 	        activeDropdownClose()
 	    end
 	    activeDropdownClose = closeSelf
+	
 	    arrow.Text = "▲"
-	    
+	
 	    task.defer(function()
 	        local contentHeight = ll.AbsoluteContentSize.Y + pad.PaddingTop.Offset + pad.PaddingBottom.Offset
-	        local maxHeight = 300  -- максимум высоты дропдауна
-	        local wanted = math.min(contentHeight, maxHeight)  -- беремн меньшее из двух
-	        
-	        -- Обновляем Canvas для скролла
+	        local maxHeight = 180 
+	        local wanted = math.min(contentHeight, maxHeight) 
+
 	        listWrap.CanvasSize = UDim2.new(0, 0, 0, ll.AbsoluteContentSize.Y)
-	        
+	
 	        local t = Config.Anim.DropdownSpeed
-	        PlayTween(listWrap, TweenInfo.new(t, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-	            Size = UDim2.new(1, 0, 0, wanted)
-	        })
-	        PlayTween(holder, TweenInfo.new(t, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-	            Size = UDim2.new(1, 0, 0, 40 + wanted)
-	        })
+	        PlayTween(listWrap, TweenInfo.new(t, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, 0, 0, wanted) })
+	        PlayTween(holder, TweenInfo.new(t, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(1, 0, 0, 40 + wanted) })
 	    end)
 	end
-
 	local function toggleOpen()
 		if openedLocal then
 			closeSelf()
@@ -2710,6 +2708,7 @@ task.defer(function()
 end)
 
 return UI
+
 
 
 
