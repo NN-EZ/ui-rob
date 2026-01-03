@@ -1238,6 +1238,7 @@ local function addButton(page: ScrollingFrame, text: string, callback: (() -> ()
 
 	local holder = New("Frame", {
 		BackgroundColor3 = Color3.fromRGB(28, 28, 34),
+		BackgroundTransparency = 1,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 40),
 		Parent = parent,
@@ -1417,6 +1418,7 @@ local function addSlider(page: ScrollingFrame, text: string, minVal: number, max
 
 	local holder = New("Frame", {
 		BackgroundColor3 = Color3.fromRGB(28, 28, 34),
+		BackgroundTransparency = 1,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 56),
 		Parent = parent,
@@ -1582,6 +1584,7 @@ local function addKeybind(page: ScrollingFrame, text: string, defaultKey: Enum.K
 
 	local holder = New("Frame", {
 		BackgroundColor3 = Color3.fromRGB(28, 28, 34),
+		BackgroundTransparency = 1,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 40),
 		Parent = parent,
@@ -1699,6 +1702,7 @@ local function addDropdown(
 
 	local holder = New("Frame", {
 		BackgroundColor3 = Color3.fromRGB(28, 28, 34),
+		BackgroundTransparency = 1,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 40),
 		ClipsDescendants = true,
@@ -1918,6 +1922,7 @@ local function addMultiDropdown(
 
 	local holder = New("Frame", {
 		BackgroundColor3 = Color3.fromRGB(28, 28, 34),
+		BackgroundTransparency = 1,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 40),
 		ClipsDescendants = true,
@@ -2241,6 +2246,7 @@ local function addLabel(
 
 	local holder = New("Frame", {
 		BackgroundColor3 = Color3.fromRGB(28, 28, 34),
+		BackgroundTransparency = 1,
 		BorderSizePixel = 0,
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
@@ -2709,6 +2715,7 @@ task.defer(function()
 end)
 
 return UI
+
 
 
 
