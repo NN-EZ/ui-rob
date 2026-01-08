@@ -251,6 +251,20 @@ local logCounter = logCounter or 0
 -- Utility
 --====================================================
 
+local function updateDividerVisibility()
+    if not divider or not tabsFrame then return end
+    
+    local hasVisibleTabs = false
+    for _, child in ipairs(tabsFrame:GetChildren()) do
+        if child:IsA("TextButton") and child.Visible then
+            hasVisibleTabs = true
+            break
+        end
+    end
+    
+    divider.Visible = hasVisibleTabs
+end
+
 local function GetInset(): Vector2
 	local inset = GuiService:GetGuiInset()
 	return Vector2.new(inset.X, inset.Y)
@@ -2684,21 +2698,6 @@ do
 	end)
 	table.insert(allConnections, globalConn :: any)
 end
-
-local function updateDividerVisibility()
-    if not divider or not tabsFrame then return end
-    
-    local hasVisibleTabs = false
-    for _, child in ipairs(tabsFrame:GetChildren()) do
-        if child:IsA("TextButton") and child.Visible then
-            hasVisibleTabs = true
-            break
-        end
-    end
-    
-    divider.Visible = hasVisibleTabs
-end
-
 --====================================================
 -- UI.RESTART
 --====================================================
@@ -2751,6 +2750,7 @@ task.defer(function()
 end)
 
 return UI
+
 
 
 
