@@ -911,6 +911,7 @@ closeBtn = New("ImageButton", {
 accentLine = New("Frame", {
 	Name = "Accent",
 	BackgroundColor3 = Config.Accent,
+	BackgroundTransparency = 0.7,
 	BorderSizePixel = 0,
 	Position = UDim2.new(0, 0, 0, 48),
 	Size = UDim2.new(1, 0, 0, 2),
@@ -953,10 +954,11 @@ tabsFrame = New("Frame", {
 local divider = New("Frame", {
     Name = "Divider",
     BackgroundColor3 = Config.Accent,
-    --BackgroundTransparency = 0.7,
     BorderSizePixel = 0,
+	BackgroundTransparency = 0.5,
     Position = UDim2.new(0, 160, 0, 0),
     Size = UDim2.new(0, 2, 1, 1),
+    Visible = false, -- Скрываем по умолчанию [file:1]
     Parent = body,
 })
 
@@ -1163,6 +1165,8 @@ local function createTab(tabName: string, icon: string?)
 		task.defer(select)
 	end
 
+	updateDividerVisibility()
+	
 	return {
 		Button = btn,
 		Page = page,
@@ -2682,13 +2686,19 @@ do
 end
 
 local function updateDividerVisibility()
-    local hasTabs = #tabsFrame:GetChildren() > 0
-    local hasContent = content:FindFirstChild("Page") ~= nil
+    if not divider or not tabsFrame then return end
     
-    if divider then
-        divider.Visible = hasTabs and hasContent
+    local hasVisibleTabs = false
+    for _, child in ipairs(tabsFrame:GetChildren()) do
+        if child:IsA("TextButton") and child.Visible then
+            hasVisibleTabs = true
+            break
+        end
     end
+    
+    divider.Visible = hasVisibleTabs
 end
+
 --====================================================
 -- UI.RESTART
 --====================================================
@@ -2741,6 +2751,7 @@ task.defer(function()
 end)
 
 return UI
+
 
 
 
