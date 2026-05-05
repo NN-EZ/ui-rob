@@ -26,14 +26,10 @@ local Icons = {
 	Arrow = "➡️",
 }
 --// BACKGROUND
-local FOLDER = "Vibus"
+local FOLDER = "Xsaf/XsafDemo"
 local BG_FILE   = FOLDER .. "/bg.png"
-local CFG_FILE   = FOLDER .. "/Vibus_Settings.json"
+local CFG_FILE   = FOLDER .. "/Xsaf_Settings.json"
 local BG_URL    = "https://media.discordapp.net/attachments/1456348568079302758/1456348662018998363/fee38623-a264-45f3-bd07-a261ad992e4b.png?ex=69609ba2&is=695f4a22&hm=465fa8b54d6bb46acd212e721daace8b652f5a85e82f2dc0e7699f463486ba69&=&format=webp&quality=lossless&width=888&height=592"
---"https://media.discordapp.net/attachments/1456348568079302758/1456351732048203838/content.png?ex=69580cbe&is=6956bb3e&hm=93df3347b1ec5fb2dbe36a584fe52a56b1c1a6d3bb99592b962eba9a2c40cff5&=&format=webp&quality=lossless"
---"https://media.discordapp.net/attachments/1456296637277274373/1456300436909850654/cd118457-2b80-4295-91ff-8828cabb9851.png?ex=6957dcf8&is=69568b78&hm=4623e5fec4c196b98cd5c6d793afe76514c908094378352f958945947af8a78c&=&format=webp&quality=lossless&width=1382&height=922"
---"https://media.discordapp.net/attachments/1456348568079302758/1456348662018998363/fee38623-a264-45f3-bd07-a261ad992e4b.png?ex=695809e2&is=6956b862&hm=f96f660a4d0a5b336e24df53d4e2376d43f424a5771b477d65a07afd1784b2b5&=&format=webp&quality=lossless&width=1379&height=919" 
---"https://media.discordapp.net/attachments/1456296637277274373/1456300436909850654/cd118457-2b80-4295-91ff-8828cabb9851.png?ex=6957dcf8&is=69568b78&hm=4623e5fec4c196b98cd5c6d793afe76514c908094378352f958945947af8a78c&=&format=webp&quality=lossless&width=1382&height=922"
 local hasFS = makefolder and isfolder and writefile and readfile and getcustomasset
 
 if hasFS then
@@ -67,7 +63,7 @@ local Config = {
 	Info = Color3.fromRGB(33, 150, 243),
 	Disabled = Color3.fromRGB(117, 117, 117),
 	TitleSize = 16,
-	HeaderSize = 13,
+	HeaderSize = 15,
 	BodySize = 12,
 	SmallSize = 11,
 	Padding = 12,
@@ -127,7 +123,7 @@ local function saveConfig()
     end
 
     pcall(function()
-        playerGui:SetAttribute("Vibus_Settings", json)
+        playerGui:SetAttribute("Xsaf_Settings", json)
     end)
 end
 
@@ -144,7 +140,7 @@ local function loadConfig()
 
     if not json then
         pcall(function()
-            json = playerGui:GetAttribute("Vibus_Settings")
+            json = playerGui:GetAttribute("Xsaf_Settings")
         end)
     end
 
@@ -776,7 +772,7 @@ New("TextLabel", {
     TextColor3 = Color3.fromRGB(255, 255, 255),
     TextStrokeColor3 = Color3.fromRGB(0, 0, 0),
     TextStrokeTransparency = 0.5,
-    Text = "Vibus🎄",
+    Text = "Xsaf",
     AutomaticSize = Enum.AutomaticSize.XY,
     Parent = titleHolder,
 })
@@ -882,7 +878,7 @@ settingsPopover = New("Frame", {
 	Parent = topbar,
 }, {
 	New("UICorner", { CornerRadius = UDim.new(0, 8) }),
-	New("UIStroke", { Color = Config.Accent, Thickness = 1, Transparency = 0.5 }),
+	-- New("UIStroke", { Color = Config.Accent, Thickness = 1, Transparency = 0.5 }),
 }) :: Frame
 
 New("Frame", {
@@ -1273,7 +1269,7 @@ local function addButton(page: ScrollingFrame, text: string, callback: (() -> ()
 		Parent = parent,
 	}, {
 		New("UICorner", { CornerRadius = UDim.new(0, 0) }),
-		New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1 }),
+		-- New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1 }),
 	}) :: Frame
 
 	local displayText = icon and (icon .. " " .. text) or text
@@ -1344,7 +1340,7 @@ local function addToggle(page: ScrollingFrame, text: string, default: boolean, c
 		Parent = parent,
 	}, {
 		New("UICorner", { CornerRadius = UDim.new(0, 0) }),
-		New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1 }),
+		-- New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1 }),
 	}) :: Frame
 
 	local displayText = icon and (icon .. " " .. text) or text
@@ -1453,7 +1449,7 @@ local function addSlider(page: ScrollingFrame, text: string, minVal: number, max
 		Parent = parent,
 	}, {
 		New("UICorner", { CornerRadius = UDim.new(0, 0) }),
-		New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1 }),
+		-- New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1 }),
 	}) :: Frame
 	MarkNoWindowDrag(holder)
 
@@ -1516,7 +1512,7 @@ local function addSlider(page: ScrollingFrame, text: string, minVal: number, max
 		Parent = line,
 	}, {
 		New("UICorner", { CornerRadius = UDim.new(1, 0) }),
-		New("UIStroke", { Color = Config.AccentGlow, Thickness = 2, Transparency = 0.3 }),
+		-- New("UIStroke", { Color = Config.AccentGlow, Thickness = 2, Transparency = 0.3 }),
 	}) :: TextButton
 	MarkNoWindowDrag(thumb)
 
@@ -1619,7 +1615,7 @@ local function addKeybind(page: ScrollingFrame, text: string, defaultKey: Enum.K
 		Parent = parent,
 	}, {
 		New("UICorner", { CornerRadius = UDim.new(0, 0) }),
-		New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1 }),
+		-- New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1 }),
 	}) :: Frame
 	MarkNoWindowDrag(holder)
 
@@ -1651,7 +1647,7 @@ local function addKeybind(page: ScrollingFrame, text: string, defaultKey: Enum.K
 		Parent = holder,
 	}, {
 		New("UICorner", { CornerRadius = UDim.new(0, 8) }),
-		New("UIStroke", { Color = Config.Accent, Thickness = 1, Transparency = 0.65 }),
+		-- New("UIStroke", { Color = Config.Accent, Thickness = 1, Transparency = 0.65 }),
 	}) :: TextButton
 	MarkNoWindowDrag(btn)
 
@@ -1738,7 +1734,7 @@ local function addDropdown(
 		Parent = parent,
 	}, {
 		New("UICorner", { CornerRadius = UDim.new(0, 0) }),
-		New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1 }),
+		-- New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1 }),
 	}) :: Frame
 	MarkNoWindowDrag(holder)
 
@@ -1770,7 +1766,7 @@ local function addDropdown(
 		Parent = holder,
 	}, {
 		New("UICorner", { CornerRadius = UDim.new(0, 8) }),
-		New("UIStroke", { Color = Config.Accent, Thickness = 1, Transparency = 0.65 }),
+		-- New("UIStroke", { Color = Config.Accent, Thickness = 1, Transparency = 0.65 }),
 	}) :: TextButton
 	MarkNoWindowDrag(valueBtn)
 
@@ -1894,7 +1890,7 @@ local function addDropdown(
 			Parent = list,
 		}, {
 			New("UICorner", { CornerRadius = UDim.new(0, 8) }),
-			New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1, Transparency = 0.4 }),
+			-- New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1, Transparency = 0.4 }),
 		}) :: TextButton
 		MarkNoWindowDrag(b)
 
@@ -1961,7 +1957,7 @@ local function addMultiDropdown(
 		Parent = parent,
 	}, {
 		New("UICorner", { CornerRadius = UDim.new(0, 0) }),
-		New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1 }),
+		-- New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1 }),
 	}) :: Frame
 	MarkNoWindowDrag(holder)
 
@@ -1993,7 +1989,7 @@ local function addMultiDropdown(
 		Parent = holder,
 	}, {
 		New("UICorner", { CornerRadius = UDim.new(0, 8) }),
-		New("UIStroke", { Color = Config.Accent, Thickness = 1, Transparency = 0.65 }),
+		-- New("UIStroke", { Color = Config.Accent, Thickness = 1, Transparency = 0.65 }),
 	}) :: TextButton
 	MarkNoWindowDrag(valueBtn)
 
@@ -2179,7 +2175,7 @@ local function addMultiDropdown(
 				Parent = row,
 			}, {
 				New("UICorner", { CornerRadius = UDim.new(0, 8) }),
-				New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1, Transparency = 0.4 }),
+				-- New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1, Transparency = 0.4 }),
 			}) :: TextButton
 			MarkNoWindowDrag(b)
 			b.MouseButton1Click:Connect(onClick)
@@ -2217,7 +2213,7 @@ local function addMultiDropdown(
 			Parent = list,
 		}, {
 			New("UICorner", { CornerRadius = UDim.new(0, 8) }),
-			New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1, Transparency = 0.4 }),
+			-- New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1, Transparency = 0.4 }),
 			New("UIPadding", { PaddingLeft = UDim.new(0, 10) }),
 		}) :: TextButton
 		MarkNoWindowDrag(b)
@@ -2291,7 +2287,7 @@ local function addLabel(
 		Parent = parent,
 	}, {
 		New("UICorner", { CornerRadius = UDim.new(0, 0) }),
-		New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1 }),
+		-- New("UIStroke", { Color = Color3.fromRGB(55, 59, 62), Thickness = 1 }),
 		New("UIPadding", {
 			PaddingLeft = UDim.new(0, Config.Padding),
 			PaddingRight = UDim.new(0, Config.Padding),
@@ -2751,27 +2747,3 @@ task.defer(function()
 end)
 
 return UI
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
