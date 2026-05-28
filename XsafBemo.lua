@@ -29,7 +29,7 @@ local Icons = {
 local FOLDER = "Xsaf/XsafDemo"
 local BG_FILE   = FOLDER .. "/bg.png"
 local CFG_FILE   = FOLDER .. "/Xsaf_Settings.json"
-local BG_URL    = "https://media.discordapp.net/attachments/1456348568079302758/1456348662018998363/fee38623-a264-45f3-bd07-a261ad992e4b.png?ex=69609ba2&is=695f4a22&hm=465fa8b54d6bb46acd212e721daace8b652f5a85e82f2dc0e7699f463486ba69&=&format=webp&quality=lossless&width=888&height=592"
+local BG_URL    = "https://github.com/NN-EZ/ui-rob/blob/main/r.png?raw=true"
 local hasFS = makefolder and isfolder and writefile and readfile and getcustomasset
 
 if hasFS then
