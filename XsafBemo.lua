@@ -838,7 +838,7 @@ local discordLink = New("TextButton", {
 })
 
 discordLink.MouseButton1Click:Connect(function()
-    setclipboard("https://discord.gg/vwBVrhnN4c")
+    setclipboard("https://discord.gg/c74dWzSSBj")
     if typeof(PushLog) == "function" then
         PushLog("INFO", "Discord ссылка скопирована!")
     end
